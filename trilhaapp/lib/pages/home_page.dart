@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trilhaapp/pages/consuta_cep.dart';
 import 'package:trilhaapp/pages/pagina1.dart';
 import 'package:trilhaapp/pages/test/pagina2.dart';
 import 'package:trilhaapp/shared/widgets/custon_drawer.dart';
+
+import '../service/dark_mode_servide.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomePage extends StatefulWidget {
@@ -16,9 +19,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
       drawer: DrawerCuston(),
-      appBar: AppBar(title: const Text('home page')),
+      appBar: AppBar(
+        title: const Text('home page'),
+        actions: [
+          Consumer<DarkModeService>(builder: (_, darkmodeStatus, widget) {
+            return Row(
+              children: [
+                const Text('Dark Mode'),
+                Switch(
+                    value: darkmodeStatus.getDarkmode,
+                    onChanged: (value) => darkmodeStatus.setDarkmode = value)
+              ],
+            );
+          })
+        ],
+      ),
       body: Column(
         children: [
           Expanded(

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class Tarefa {
   // ignore: prefer_final_fields
   String _id = UniqueKey().toString();
-  // ignore: prefer_final_fields
+
   String _descricao = '';
-  // ignore: prefer_final_fields
+
   bool _concluido = false;
 
   String get getId => _id;

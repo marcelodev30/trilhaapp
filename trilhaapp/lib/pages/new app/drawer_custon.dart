@@ -7,6 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path_provider/path_provider.dart' as path_providre;
+import 'camera/camera_page.dart';
 import 'connectivity_plus/connectivity_plus_page.dart';
 import 'gps/gps.page.dart';
 import 'qr_code/qr_code_page.dart';
@@ -157,6 +158,32 @@ class DrawerCustonV2 extends StatelessWidget {
                   ),
                   SizedBox(width: 5),
                   Text('GPS',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                ],
+              ),
+            ),
+          ),
+          const Divider(color: Colors.black),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: InkWell(
+              onTap: () async {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CameraPage()));
+              },
+              child: const Row(
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.camera,
+                    color: Colors.blue,
+                    size: 22,
+                  ),
+                  SizedBox(width: 5),
+                  Text('Camera',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
                 ],

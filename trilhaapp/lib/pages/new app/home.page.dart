@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:trilhaapp/pages/new%20app/drawer_custon.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'brasil_fields /brasil.fields.page.dart';
+import 'contador/contador_page.dart';
 
 class NewAppHomePage extends StatefulWidget {
   const NewAppHomePage({super.key});
@@ -20,7 +21,7 @@ class _NewAppHomePageState extends State<NewAppHomePage>
   @override
   void initState() {
     super.initState();
-    pageController = TabController(initialIndex: 0, length: 3, vsync: this);
+    pageController = TabController(initialIndex: 0, length: 5, vsync: this);
   }
 
   @override
@@ -29,7 +30,6 @@ class _NewAppHomePageState extends State<NewAppHomePage>
       drawer: const DrawerCustonV2(),
       appBar: AppBar(
         title: const Text('New app'),
-        backgroundColor: Colors.red,
       ),
       body: TabBarView(
         controller: pageController,
@@ -62,6 +62,7 @@ class _NewAppHomePageState extends State<NewAppHomePage>
               ],
             ),
           ),
+          const ContadorPage(),
           ListView.builder(
               itemCount: message.length,
               itemBuilder: (_, index) {
@@ -83,13 +84,14 @@ class _NewAppHomePageState extends State<NewAppHomePage>
         badgeMargin: const EdgeInsets.only(bottom: 30, left: 30),
         badgePadding: const EdgeInsets.symmetric(horizontal: 5),
         badgeBorderRadius: 20,
-        {2: message.isNotEmpty ? '${message.length}' : null},
+        {3: message.isNotEmpty ? '${message.length}' : null},
         onTap: (index) => pageController.index = index,
         controller: pageController,
         style: TabStyle.react,
         items: const [
           TabItem(icon: FontAwesomeIcons.satellite, title: 'Cep'),
           TabItem(icon: FontAwesomeIcons.house, title: 'Home'),
+          TabItem(icon: FontAwesomeIcons.house, title: '+++'),
           TabItem(icon: FontAwesomeIcons.message, title: 'Message')
         ],
       ),
