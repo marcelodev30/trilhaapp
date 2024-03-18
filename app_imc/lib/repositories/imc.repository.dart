@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ImcResponsitory extends ChangeNotifier {
   List<ImcModels> _imcs = [];
 
-  List<ImcModels> get getImcs => _imcs;
+  List<ImcModels> getImcs() => _imcs;
 
   void add(ImcModels value) {
     _imcs.add(value);
@@ -26,10 +26,10 @@ class ImcResponsitory extends ChangeNotifier {
       resultado = 'Obesidade grau I';
     }
     if (imc >= 35.0 && imc <= 39.9) {
-      resultado = 'Obesida de grau II';
+      resultado = 'Obesidade grau II';
     }
     if (imc >= 40.0) {
-      resultado = 'Obesida de grau III';
+      resultado = 'Obesidade grau III';
     }
     return resultado;
   }

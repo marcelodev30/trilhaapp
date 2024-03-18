@@ -1,8 +1,15 @@
+import 'package:app_imc/shared/app.TextStyle.dart';
+import 'package:app_imc/shared/app.boxDecoration.dart';
+import 'package:app_imc/shared/app.colors.dart';
+import 'package:app_imc/shared/widget/app.Card.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import '../models/imc.model.dart';
 import '../repositories/imc.repository.dart';
-import 'widgets/tex_custon.dart';
+import '../shared/app.ButtonStyle.dart';
+import '../shared/app.InputDecoration.dart';
 
 class ImcPage extends StatefulWidget {
   const ImcPage({super.key});
@@ -12,241 +19,149 @@ class ImcPage extends StatefulWidget {
 }
 
 class _ImcPageState extends State<ImcPage> {
-  bool e = false;
+  final _pageController = PageController();
   final _fromKey = GlobalKey<FormState>();
-  final model = ImcModels();
+  var model = ImcModels();
   final respository = ImcResponsitory();
   var lista = <ImcModels>[];
+  var valorIMC = 22.60;
+
   @override
   void initState() {
     super.initState();
-    respository.addListener(() {
-      setState(() {});
-    });
+    lista = respository.getImcs();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(),
-      backgroundColor: Colors.indigo[600],
+      backgroundColor: AppColor.sapphireBlue,
       body: SafeArea(
-        child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            //padding: const EdgeInsets.all(8),
-            child: PageView(
-              children: [
+          child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              //padding: const EdgeInsets.all(8),
+              child: PageView(controller: _pageController, children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(children: [
                       const SizedBox(height: 50),
-                      const Text('IMC',
-                          style: TextStyle(
-                              fontSize: 35,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white)),
-                      Text(model.imc.toStringAsFixed(2),
-                          style: const TextStyle(
-                              fontSize: 100,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white)),
-                      Text(model.descricao,
-                          style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white)),
-                    ]),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 10),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.elliptical(50, 50))),
-                      child: Form(
-                          key: _fromKey,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 135),
-                              const Text(
-                                'Calculadora IMC',
-                                style: TextStyle(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 30),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: const InputDecoration(
-                                        hintText: 'Ex 1.80 ',
-                                        labelText: 'Altura',
-                                        border: OutlineInputBorder()),
-                                    validator: (value) =>
-                                        value!.isEmpty ? 'Invalido' : null,
-                                    onSaved: (newValue) => model.altura =
-                                        double.parse(newValue.toString()),
-                                  )),
-                                  const SizedBox(width: 20),
-                                  Expanded(
-                                      child: TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: const InputDecoration(
-                                        hintText: 'Ex 75',
-                                        labelText: 'Peso',
-                                        border: OutlineInputBorder()),
-                                    validator: (value) =>
-                                        value!.isEmpty ? 'Invalido' : null,
-                                    onSaved: (newValue) => model.peso =
-                                        double.parse(newValue.toString()),
-                                  )),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.65,
-                                height: 55,
-                                child: TextButton(
-                                  onPressed: () {
-                                    if (_fromKey.currentState!.validate()) {
-                                      _fromKey.currentState!.save();
-                                      setState(() {
-                                        model.imc = model.peso /
-                                            (model.altura * model.altura);
-                                        model.descricao =
-                                            respository.saidas(model.imc);
-                                        respository.add(model);
-                                      });
-                                    }
-                                  },
-                                  // ignore: sort_child_properties_last
-                                  child: const Text(
-                                    'Calcular IMC',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 30),
-                                  ),
-                                  style: ButtonStyle(
-                                      shape: MaterialStatePropertyAll(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                      ),
-                                      backgroundColor:
-                                          const MaterialStatePropertyAll(
-                                              Colors.indigo)),
-                                ),
-                              )
-                            ],
-                          )),
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(children: [
-                      const SizedBox(height: 50),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(width: 25),
-                          Text('Olá, bem vindo! ',
-                              style: TextStyle(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white)),
-                        ],
-                      ),
-                      Text(model.nome,
-                          style: const TextStyle(
-                              fontSize: 100,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white)),
-                      Text(model.descricao,
-                          style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white)),
+                      Text('IMC', style: AppTextStyle.text35),
+                      Text(valorIMC.toStringAsFixed(2),
+                          style: AppTextStyle.textBig100),
+                      Text(respository.saidas(valorIMC),
+                          style: AppTextStyle.text25),
                     ]),
                     Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.5,
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.elliptical(50, 50))),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 30),
-                            Expanded(
-                                child: ListView.builder(
-                              itemCount: respository.getImcs.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  height: 100,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: Card(
-                                    color: Colors.green,
-                                    elevation: 7,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Row(
-                                      children: [
-                                        const SizedBox(width: 20),
-                                        TextCuston(
-                                            texto: respository
-                                                .getImcs[index].imc
-                                                .toStringAsFixed(2)),
-                                        TextCuston(
-                                            texto:
-                                                '${respository.getImcs[index].peso}Kg'),
-                                        TextCuston(
-                                            texto: respository
-                                                .getImcs[index].altura
-                                                .toString()),
-                                      ],
-                                    ),
+                            horizontal: 50, vertical: 10),
+                        decoration: AppBoxDecoration.borderRadius50,
+                        child: Form(
+                            key: _fromKey,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Calculadora IMC',
+                                      style: AppTextStyle.text40Black),
+                                  const SizedBox(height: 30),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          AlturaInputFormatter(),
+                                        ],
+                                        decoration:
+                                            AppInputDecoration.custonBorder(
+                                                'Altura', 'Ex 1.80 '),
+                                        validator: (value) =>
+                                            value!.isEmpty ? 'Invalido' : null,
+                                        onSaved: (newValue) => model.altura =
+                                            double.parse(
+                                                newValue!.replaceAll(',', '.')),
+                                      )),
+                                      const SizedBox(width: 20),
+                                      Expanded(
+                                          child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          PesoInputFormatter()
+                                        ],
+                                        decoration:
+                                            AppInputDecoration.custonBorder(
+                                                'Peso', 'Ex 75 '),
+                                        validator: (value) =>
+                                            value!.isEmpty ? 'Invalido' : null,
+                                        onSaved: (newValue) => model.peso =
+                                            double.parse(
+                                                newValue!.replaceAll(',', '.')),
+                                      )),
+                                    ],
                                   ),
-                                );
-                              },
-                            ))
-                          ],
-                        )),
+                                  const SizedBox(height: 20),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.65,
+                                      height: 55,
+                                      child: TextButton(
+                                          onPressed: () {
+                                            if (_fromKey.currentState!
+                                                .validate()) {
+                                              _fromKey.currentState!.save();
+                                              model.imc = model.peso /
+                                                  (model.altura * model.altura);
+                                              model.descricao =
+                                                  respository.saidas(model.imc);
+                                              model.setDate = DateTime.now();
+                                              respository.add(model);
+                                              valorIMC = model.imc;
+                                              model = ImcModels();
+                                              setState(() {});
+                                            }
+                                          },
+                                          style: AppButtonStyle.custon,
+                                          child: Text(
+                                            'Calcular IMC',
+                                            style: AppTextStyle.text25,
+                                          )))
+                                ])))
                   ],
                 ),
-              ],
-            )),
-      ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.white,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.person_sharp),
-            label: 'IMC',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.list),
-            label: 'Historico',
-          ),
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(height: 20),
+                      Text('Historico', style: AppTextStyle.text35),
+                      Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          decoration: AppBoxDecoration.borderRadius50,
+                          child: ListView.builder(
+                              itemCount: lista.length,
+                              itemBuilder: (context, index) {
+                                return AppCard(model: lista[index]);
+                              }))
+                    ])
+              ]))),
+      bottomNavigationBar: ConvexAppBar(
+        backgroundColor: AppColor.sapphireBlue,
+        style: TabStyle.react,
+        items: const [
+          TabItem(icon: Icons.house),
+          TabItem(icon: Icons.history),
         ],
+        initialActiveIndex: 0,
+        onTap: (int i) => _pageController.jumpToPage(i),
       ),
     );
   }
 }
-
-var test = Text(
-    // respository.getImcs[index].descricao
-    2.toString().replaceAll('Peso Normal', 'Normal'),
-    style: const TextStyle(
-        fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white));
