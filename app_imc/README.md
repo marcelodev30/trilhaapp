@@ -1,16 +1,18 @@
-# app_imc
 
-A new Flutter project.
+# App IMC
 
-## Getting Started
+Este projeto de cálculo de IMC foi desenvolvido para aplicar os conhecimentos adquiridos.
 
-This project is a starting point for a Flutter application.
+## Funcionalidades
 
-A few resources to get you started if this is your first Flutter project:
+- Calcular o IMC.
+- Exibir históricos.
+- Multiplataforma.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+<img height="500px" src="https://github.com/marcelodev30/trilhaapp/assets/161260493/040e272c-cec9-4ede-a011-a76ec4e168b1" />
+
+
+
+
