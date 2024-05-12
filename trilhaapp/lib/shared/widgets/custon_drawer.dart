@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:trilhaapp/pages/conf/confing.page.dart';
+import 'package:trilhaapp/pages/numeros_hive/numeros.hive.dart';
 
 import 'package:trilhaapp/pages/postspage.dart';
 
@@ -97,7 +99,8 @@ class DrawerCuston extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: InkWell(
-              onTap: () {},
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ConfigPage())),
               child: const Row(
                 children: [
                   Icon(Icons.settings),
@@ -127,6 +130,30 @@ class DrawerCuston extends StatelessWidget {
                   Icon(Icons.post_add),
                   SizedBox(width: 5),
                   Text('Posts',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                ],
+              ),
+            ),
+          ),
+          const Divider(
+            color: Colors.black,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NumeroAHive()));
+              },
+              child: const Row(
+                children: [
+                  Icon(Icons.post_add),
+                  SizedBox(width: 5),
+                  Text('Numeros Hive',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
                 ],
@@ -293,7 +320,6 @@ class DrawerCuston extends StatelessWidget {
                 //var data = DateTime(2022, 05, 09);
                 //print(DateFormat.yMMMMd('en_US').format(DateTime.now()));
                 Intl.defaultLocale = 'pt_BR';
-
               },
               child: const Row(
                 children: [

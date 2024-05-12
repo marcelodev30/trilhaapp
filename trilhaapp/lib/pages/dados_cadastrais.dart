@@ -123,7 +123,6 @@ class _MyDadosState extends State<MyDados> {
               ),
               TextLabel(
                   texto: 'Protenção Salarial R\$: ${salarioEscolhido.toInt()}'),
-
               Slider(
                   min: 0,
                   max: 12500,
