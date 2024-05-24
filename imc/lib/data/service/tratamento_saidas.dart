@@ -1,5 +1,5 @@
 String saidas(double imc) {
-  var resultado = '';
+  String resultado = '';
   if (imc <= 18.5) {
     resultado = 'Abaixo do peso normal';
   }

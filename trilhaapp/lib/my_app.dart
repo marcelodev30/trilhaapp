@@ -5,6 +5,7 @@ import 'pages/splash_sreen.page.dart';
 import 'service/contador_service.dart';
 import 'service/dark_mode_servide.dart';
 
+
 class Myapp extends StatelessWidget {
   const Myapp({super.key});
 
@@ -30,7 +31,7 @@ class Myapp extends StatelessWidget {
   }
 }
 
-var themadata = ThemeData(
+ThemeData themadata = ThemeData(
   appBarTheme: const AppBarTheme(
       foregroundColor: Colors.white,
       color: Colors.red,
