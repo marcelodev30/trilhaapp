@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'page/viacep.page.dart';
+import 'ui/page/viacep.page.dart';
 
 void main() {
   runApp(const MyApp());

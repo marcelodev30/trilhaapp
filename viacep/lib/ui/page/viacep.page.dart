@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:viacep/models/cep.back4app.model.dart';
-import 'package:viacep/repositories/viacep.repository.dart';
+import 'package:viacep/data/models/cep.back4app.model.dart';
+import 'package:viacep/data/repositories/viacep.repository.dart';
 
 class ViaCepPage extends StatefulWidget {
   const ViaCepPage({super.key});
