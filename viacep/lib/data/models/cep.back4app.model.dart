@@ -75,4 +75,16 @@ class CepModel {
     data['updatedAt'] = updatedAt;
     return data;
   }
+
+
+  Map<String, dynamic> createJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['cep'] = cep;
+    data['logradouro'] = logradouro;
+    data['complemento'] = complemento;
+    data['bairro'] = bairro;
+    data['localidade'] = localidade;
+    data['uf'] = uf;
+    return data;
+  }
 }

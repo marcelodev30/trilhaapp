@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:viacep/data/models/cep.back4app.model.dart';
-import 'package:viacep/data/repositories/viacep.repository.dart';
+import 'package:viacep/data/repositories/cep.repository.dart';
 
 class ViaCepPage extends StatefulWidget {
   const ViaCepPage({super.key});
@@ -11,7 +11,7 @@ class ViaCepPage extends StatefulWidget {
 
 class _ViaCepPageState extends State<ViaCepPage> {
   var modelCep = CepModel();
-  final repositoryCep = ViaCepRepository();
+  final repositoryCep = CepRepository();
   final _TexCepController = TextEditingController();
 
   @override
