@@ -10,17 +10,20 @@ class CepRepository {
     List data = response.data['results'];
 
     if (data.isEmpty) {
-      final response = await ViaCep.get(cep);
-      if (response.statusCode == 200) {
-        await dio.post('', data: response.data as Map);
-
-        return CepModel.fromJson(response.data);
-      } else {
-        return response.data;
+      var viacep = await ViaCep.fetchByCep(cep);
+      CepModel a = CepModel.fromJson(viacep.toJson());
+      if (a.localidade != 'Sem Registo') {
+        await save(a);
       }
+      return a;
     } else {
       return CepModel.fromJson(data[0]);
     }
+  }
+
+  Future save(CepModel model) async {
+    var rep = await dio.post('', data: model.createJson());
+    return rep.data;
   }
 
   Future<List<CepModel>> findcepAll() async {
@@ -39,6 +42,6 @@ class CepRepository {
   }
 
   Future<void> update(CepModel model) async {
-    await dio.put('/${model.objectId}',data: model.createJson());
+    await dio.put('/${model.objectId}', data: model.createJson());
   }
 }

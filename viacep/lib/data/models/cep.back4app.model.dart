@@ -42,12 +42,12 @@ class CepModel {
       this.createdAt,
       this.updatedAt});
   CepModel.criate({
-    this.cep,
-    this.logradouro,
-    this.complemento,
-    this.bairro,
-    this.localidade,
-    this.uf,
+    required this.cep,
+    required this.logradouro,
+    required this.complemento,
+    required this.bairro,
+    required this.localidade,
+    required this.uf,
   });
 
   CepModel.fromJson(Map<String, dynamic> json) {
@@ -75,7 +75,6 @@ class CepModel {
     data['updatedAt'] = updatedAt;
     return data;
   }
-
 
   Map<String, dynamic> createJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
